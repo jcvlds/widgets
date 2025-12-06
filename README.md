@@ -45,20 +45,20 @@ oci://ghcr.io/jcvlds/charts/widgetapi
 
 ## Features
 
-### ✔ Single-replica stateful web service  
+### Single-replica stateful web service  
 Uses a `Deployment` and a `PersistentVolumeClaim` for `/widgetapi/data`.
 
-### ✔ Gateway API ingress  
+### Gateway API ingress  
 Exposes the service using **HTTPRoute**, attaching to an existing cluster Gateway.
 
-### ✔ Complete external secret integration  
+### Complete external secret integration  
 Relies on `ExternalSecret` + `SecretStore` (OCI Vault).  
 The chart **does not create secrets**—they are supplied externally by the platform.
 
-### ✔ Strict network isolation  
+### Strict network isolation  
 A default deny-all **Egress** `NetworkPolicy` is included.
 
-### ✔ Production-ready YAML & GitOps-first design  
+### Production-ready YAML & GitOps-first design  
 Chart supports FluxCD `HelmRelease` deployments out of the box.
 
 ---
@@ -72,6 +72,7 @@ helm pull oci://ghcr.io/jcvlds/charts/widgetapi --version <version>
 ```
 
 ## Example FluxCD HelmRelease
+```yaml
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -98,11 +99,12 @@ spec:
       secretName: widgetapi-secret
       secretKeyToken: TOKEN
       uploadLimit: 10485760
+```
 
 ## External Secret Requirement
 
 This chart expects a secret containing the authentication token:
-
+```yaml
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -119,12 +121,12 @@ spec:
     - secretKey: TOKEN
       remoteRef:
         key: widgetapi-token      # Name in OCI Vault
-
-
+```
 The Deployment reads this token as $TOKEN.
 
 ## Configuration
 Values Table
+```table
 Key	Description	Default
 replicaCount	Number of pod replicas	1
 image.repository	Image repository	"mayth/simple-upload-server"
@@ -142,6 +144,7 @@ config.secretKeyToken	Key inside the secret for token	"TOKEN"
 config.uploadLimit	Max upload limit	1048576
 networkPolicy.enabled	Enable NetworkPolicy	true
 networkPolicy.allowFromNamespaces	Approved namespaces for ingress	[]
+```
 
 ## Testing
 Included Tests
