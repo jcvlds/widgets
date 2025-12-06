@@ -322,3 +322,32 @@ tests:
           path: spec.ingress[0].ports[0].port
           value: 8080
 ```
+
+# Optional CI: GitHub Actions Workflow (.github/workflows/helm-ci.yaml)
+```yaml
+name: Helm Lint & Tests
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  helm-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Install helm-unittest plugin
+        run: helm plugin install https://github.com/helm-unittest/helm-unittest
+
+      - name: Helm Lint
+        run: helm lint .
+
+      - name: Run Unittests
+        run: helm unittest .
+```
