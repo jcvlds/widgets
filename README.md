@@ -45,20 +45,20 @@ oci://ghcr.io/jcvlds/charts/widgetapi
 
 ## Features
 
-### Single-replica stateful web service  
+### - Single-replica stateful web service  
 Uses a `Deployment` and a `PersistentVolumeClaim` for `/widgetapi/data`.
 
-### Gateway API ingress  
+### - Gateway API ingress  
 Exposes the service using **HTTPRoute**, attaching to an existing cluster Gateway.
 
-### Complete external secret integration  
+### - Complete external secret integration  
 Relies on `ExternalSecret` + `SecretStore` (OCI Vault).  
 The chart **does not create secrets**—they are supplied externally by the platform.
 
-### Strict network isolation  
+### - Strict network isolation  
 A default deny-all **Egress** `NetworkPolicy` is included.
 
-### Production-ready YAML & GitOps-first design  
+### - Production-ready YAML & GitOps-first design  
 Chart supports FluxCD `HelmRelease` deployments out of the box.
 
 ---
@@ -125,26 +125,27 @@ spec:
 The Deployment reads this token as $TOKEN.
 
 ## Configuration
-Values Table
-```table
-Key	Description	Default
-replicaCount	Number of pod replicas	1
-image.repository	Image repository	"mayth/simple-upload-server"
-image.tag	Image tag (optional)	""
-service.port	Internal service port	8080
-gateway.enabled	Enable Gateway API HTTPRoute	true
-gateway.name	Gateway name	"public-gateway"
-gateway.namespace	Gateway namespace	"networking"
-gateway.listenerName	Listener sectionName	"http"
-gateway.host	External hostname	"widgetapi.example.com"
-persistence.storageClassName	Storage class	""
-persistence.size	PVC size	"1Gi"
-config.secretName	Name of secret providing TOKEN	"widgetapi-secret"
-config.secretKeyToken	Key inside the secret for token	"TOKEN"
-config.uploadLimit	Max upload limit	1048576
-networkPolicy.enabled	Enable NetworkPolicy	true
-networkPolicy.allowFromNamespaces	Approved namespaces for ingress	[]
-```
+### Values Table
+| Key                                 | Description                     | Default                        |
+| ----------------------------------- | ------------------------------- | ------------------------------ |
+| `replicaCount`                      | Number of pod replicas          | `1`                            |
+| `image.repository`                  | Image repository                | `"mayth/simple-upload-server"` |
+| `image.tag`                         | Image tag (optional)            | `""`                           |
+| `service.port`                      | Internal service port           | `8080`                         |
+| `gateway.enabled`                   | Enable Gateway API HTTPRoute    | `true`                         |
+| `gateway.name`                      | Gateway name                    | `"public-gateway"`             |
+| `gateway.namespace`                 | Gateway namespace               | `"networking"`                 |
+| `gateway.listenerName`              | Listener sectionName            | `"http"`                       |
+| `gateway.host`                      | External hostname               | `"widgetapi.example.com"`      |
+| `persistence.storageClassName`      | Storage class                   | `""`                           |
+| `persistence.size`                  | PVC size                        | `"1Gi"`                        |
+| `config.secretName`                 | Name of secret providing TOKEN  | `"widgetapi-secret"`           |
+| `config.secretKeyToken`             | Key inside the secret for token | `"TOKEN"`                      |
+| `config.uploadLimit`                | Max upload limit                | `1048576`                      |
+| `networkPolicy.enabled`             | Enable NetworkPolicy            | `true`                         |
+| `networkPolicy.allowFromNamespaces` | Approved namespaces for ingress | `[]`                           |
+
+
 
 ## Testing
 ### Included Tests
@@ -222,7 +223,7 @@ Feel free to fork this chart as a template for future applications.
 
 ---
 
-# 🧪 Helm-Unittest Suite (`tests/` directory)
+# Helm-Unittest Suite (`tests/` directory)
 
 Create:
 - tests/
