@@ -147,8 +147,7 @@ networkPolicy.allowFromNamespaces	Approved namespaces for ingress	[]
 ```
 
 ## Testing
-Included Tests
-
+### Included Tests
 This chart includes helm-unittest suites validating:
 
 - HTTPRoute attaches to the correct Gateway
@@ -185,8 +184,7 @@ curl "https://widgetapi.example.com/files/demo.txt?token=<TOKEN>"
 ```
 
 ## Operational Notes
-Persistence
-
+### Persistence
 Data is stored under /widgetapi/data on the PVC.
 It remains across:
 - Pod restarts
@@ -194,15 +192,13 @@ It remains across:
 - Helm upgrades
 - Image tag changes
 
-Secret rotation
-
+### Secret rotation
 Rotation follows this chain:
 - Update value in OCI Vault
 - ExternalSecret controller syncs → Kubernetes Secret updates
 - Deployment automatically restarts with new TOKEN
 
-NetworkPolicy
-
+### NetworkPolicy
 Outbound connections are blocked by default.
 Only inbound HTTP traffic via the Gateway is allowed.
 
