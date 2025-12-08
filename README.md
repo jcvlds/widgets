@@ -24,21 +24,21 @@ https://github.com/jcvlds/widgets/blob/main/WidgetAPI_K8s_Architecture.png
 
 ## Features
 
-### - Single-replica stateful web service  
-Uses a `Deployment` and a `PersistentVolumeClaim` for `/widgetapi/data`.
-
-### - Gateway API ingress  
+### - Gateway API ingress
 Exposes the service using **HTTPRoute**, attaching to an existing cluster Gateway.
 
-### - Complete external secret integration  
-Relies on `ExternalSecret` + `SecretStore` (OCI Vault).  
-The chart **does not create secrets**—they are supplied externally by the platform.
+### - Single-replica stateful web service 
+Uses a `Deployment` and a `PersistentVolumeClaim` for `/widgetapi/data`.
 
-### - Strict network isolation  
-A default deny-all **Egress** `NetworkPolicy` is included.
+### - Complete external secret integration
+Relies on `ExternalSecret` + `SecretStore` (Cloud Vault).  
+The chart **does not create secrets**—they are supplied externally to the cluster.
 
-### - Production-ready YAML & GitOps-first design  
-Chart supports FluxCD `HelmRelease` deployments out of the box.
+### - Network isolation
+A default deny-all **Egress** `NetworkPolicy`, and allow cluster internal ingress is included.
+
+### - Includes GitOps YAML
+Chart supports deploying to K8s with FluxCD and Kustomization deployments in the gitops/widgetapi/ directory.
 
 ---
 
